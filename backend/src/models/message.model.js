@@ -2,9 +2,21 @@ import mongoose from "mongoose"
 
 const messageSchema=mongoose.Schema(
     {
-        content:{
-            type:String,
-            required:true
+        senderId:{
+            type:mongoose.Schema.Types.ObjectId,
+            required:true,
+            ref:'user'
+        },
+        recieverId:{
+            type:mongoose.Schema.Types.ObjectId,
+            required:true,
+            ref:'user'
+        },
+        text:{
+            type:String
+        },
+        image:{
+            type:String
         }
     },
     {timestamps:true}
