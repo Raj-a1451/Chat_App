@@ -41,13 +41,13 @@ export const login=async(req,res)=>{
     const {email,password}=req.body
     try{
         if(!email||!password)
-            res.status(400).json({'message':'please provide all fields'})
+            return res.status(400).json({'message':'please provide all fields'})
         const user=await User.findOne({email})
         if(!user)
-            res.status(400).json({'message':'User not found'})
+            return res.status(400).json({'message':'User not found'})
         const isPasswordSame=await bcrypt.compare(password,user.password)
         if(!isPasswordSame){
-            res.status(400).json({'message':'Incorrect credentials'})
+            return res.status(400).json({'message':'Incorrect credentials'})
         }
         generateToken(user._id,res)
         res.status(200).json({
@@ -76,7 +76,7 @@ export const updateProfile=async(req,res)=>{
     try {
         const {profilePic}=req.body
         if(!profilePic)
-            res.status(400).json({'message':'profile pic is not provided'})
+            return res.status(400).json({'message':'profile pic is not provided'})
         const userId=req.user._id
         const uploadResponse=await cloudinary.uploader.upload(profilePic)
         const updatedUser=await User.findByIdAndUpdate(
