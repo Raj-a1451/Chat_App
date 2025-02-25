@@ -37,10 +37,10 @@ export const useChatStore=create((set,get)=>({
     },
 
     sendMessage:async(messageData)=>{
-        const {messages,selectedUser}=get()
+        const {messages=[],selectedUser}=get()
         try {
-            const res=await axiosInstance.post(`/message/send/${selectedUser}`,messageData)
-            set({messages:[...messages,res.data],})
+            const res=await axiosInstance.post(`/message/send/${selectedUser._id}`,messageData)
+            set({messages:[...messages,res.data]})
         } catch (err) {
             console.log("Error in sendMessage",err.response.data.message)
             toast.error(err.response.data.message)
